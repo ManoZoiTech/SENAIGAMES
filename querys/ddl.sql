@@ -1,0 +1,2 @@
+-- CRIANDO SENAIGAMES
+CREAT DATABASE db_senai_games;
