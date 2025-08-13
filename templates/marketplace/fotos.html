@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Prata da Casa - Carrossel</title>
+    <style>
+        /* Estilos Gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Um cinza claro para destacar o carrossel */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        /* Título Principal */
+        .main-title {
+            font-size: 2.5em;
+            color: #002147;
+            margin-bottom: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* --- ESTILOS DO CARROSSEL --- */
+
+        /* 1. Container do Carrossel (Wrapper) */
+        .carousel-wrapper {
+            max-width: 1200px; /* Define a largura da área visível */
+            width: 90%;
+            overflow: hidden; /* Essencial: esconde os itens que estão fora da área visível */
+            position: relative;
+            /* Adiciona um gradiente nas laterais para um efeito de fade */
+            -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+        }
+
+        /* 2. Faixa do Carrossel (Track) */
+        .speakers-carousel {
+            display: flex; /* Coloca todos os itens em linha */
+            gap: 40px; /* Espaço entre os cards */
+            padding: 20px 0;
+            /* Animação */
+            animation: scroll 40s linear infinite;
+        }
+
+        /* 3. Pausa a animação com uma classe */
+        .carousel-wrapper:hover .speakers-carousel {
+            animation-play-state: paused;
+        }
+
+        /* 4. Animação de rolagem */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                /* Move a faixa para a esquerda. O valor é (largura do card + gap) * número de cards */
+                transform: translateX(calc((-260px * 10)));
+            }
+        }
+
+        /* --- FIM DOS ESTILOS DO CARROSSEL --- */
+
+
+        /* Card Individual de Palestrante */
+        .speaker-card {
+            flex-shrink: 0; /* Impede que os cards encolham */
+            width: 220px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .speaker-card:hover {
+            transform: translateY(-10px); /* Leve elevação no card ao passar o mouse */
+        }
+
+        .speaker-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 6px solid #002147;
+            object-fit: cover;
+            margin-bottom: 15px;
+            background-color: #e0e0e0;
+        }
+
+        .speaker-card h3 {
+            margin: 10px 0 5px;
+            font-size: 1.1em;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .speaker-card p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #555555;
+            line-height: 1.4;
+            height: 40px; /* Altura fixa para alinhar */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1 class="main-title">A PRATA DA CASA</h1>
+
+    <div class="carousel-wrapper" id="carouselWrapper">
+        <div class="speakers-carousel" id="speakersCarousel">
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const speakersData = [
+                { img: 'https://i.imgur.com/gX1z3Jc.png', name: 'Carlos Jacobino Lima', title: 'Presidente do Sinfor/DF' },
+                { img: 'https://i.imgur.com/pLPmU3w.png', name: 'Lucia Soares', title: 'Vice-Presidente Executiva do Sinfor/DF' },
+                { img: 'https://i.imgur.com/5h8A6yA.png', name: 'Heyrovsky Torres', title: 'Advogado, Autor e Palestrante Internacional' },
+                { img: 'https://i.imgur.com/rP6x8gY.png', name: 'Renato Riella', title: 'Marketing Político e Empresarial' },
+                { img: 'https://i.imgur.com/9C0yY9b.png', name: 'Cristina Boner Leo', title: 'Presidente do Conselho Administrativo da Globalweb' },
+                { img: 'https://i.imgur.com/F3P5R7d.png', name: 'Dora Gomes', title: '&nbsp;' },
+                { img: 'https://i.imgur.com/9z3D2J8.png', name: 'Bruna Boner', title: '&nbsp;' },
+                { img: 'https://i.imgur.com/mX7P9yL.png', name: 'Mayana Ramos', title: '&nbsp;' },
+                { img: 'https://i.imgur.com/1q8yH1W.png', name: 'Aline D\'Alessandro', title: '&nbsp;' },
+                { img: 'https://i.imgur.com/cE5eJ7V.png', name: 'Eduardo Telles Palmeira', title: '&nbsp;' }
+            ];
+
+            const carousel = document.getElementById('speakersCarousel');
+            
+            // Duplica os cards para criar o efeito de loop infinito
+            const allSpeakers = [...speakersData, ...speakersData];
+
+            allSpeakers.forEach(speaker => {
+                const card = document.createElement('div');
+                card.className = 'speaker-card';
+                card.innerHTML = `
+                    <img src="${speaker.img}" alt="Foto de ${speaker.name}">
+                    <h3>${speaker.name}</h3>
+                    <p>${speaker.title}</p>
+                `;
+                carousel.appendChild(card);
+            });
+        });
+    </script>
+
+</body>
+</html>
