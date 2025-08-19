@@ -10,8 +10,14 @@ def index(request):
     # context - objetos (python, python com bd) 
    
    
-   
-    return render(request, 'marketplace/index.html')
 
-def painel(request):
-    return render(request, 'marketplace/painel.html')
+    return render(request, 'marketplace/index.html')
+        
+def autenticar_membro(request):
+    dados = {
+        1: {"nome":"Visual Novel"},
+        2: {"nome":"Plataforma"},
+        3: {"nome":"Acao"}
+        
+    }
+    return render(request, 'marketplace/sou_membro.html', {'cards': dados})

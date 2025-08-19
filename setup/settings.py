@@ -123,6 +123,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 #onde o Django vai procurar os arquivos estáticos
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'setup/static'),
 ]
