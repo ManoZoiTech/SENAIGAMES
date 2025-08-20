@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'marketplace.apps.MarketplaceConfig',
     'crud_base',
-    'marketplace'
+    
 ]
 
 MIDDLEWARE = [
@@ -80,8 +81,32 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'candango',
+        'USER': 'root',
+        'PASSWORD': 'senai@123',
+        'HOST': 'localhost',  # Ou o IP do seu servidor MySQL, se não for local
+        'PORT': '3306',      # A porta padrão do MySQL. Mude se for diferente
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+         'test': { # Adicione esta seção para o banco de dados de teste
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'candango_db_test',  # <--- MUITO IMPORTANTE: UM NOME DIFERENTE PARA O BANCO DE DADOS DE TESTE
+        'USER': 'root',
+        'PASSWORD': 'senai@123',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+        'TEST': {
+            'NAME': 'bcandango_db_test', # Garante que o Django use este banco para testes
+            # Opcional: Adicione charset e collation se tiver problemas de codificação
+            'CHARSET': 'utf8mb4',
+            'COLLATION': 'utf8mb4_unicode_ci',
+        },
+      }
     }
 }
 
